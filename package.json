@@ -7,6 +7,7 @@
     "@citizensadvice/design-system": "^4.0.3"
   },
   "devDependencies": {
+    "backstopjs": "^5.1.0",
     "css-loader": "^4.3.0",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "mini-css-extract-plugin": "^0.11.2",
@@ -17,6 +18,7 @@
     "sass": "^1.26.11",
     "sass-loader": "^10.0.2",
     "url-loader": "^4.1.0",
+    "wait-port": "^0.2.9",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }

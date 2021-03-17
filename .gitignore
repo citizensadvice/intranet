@@ -6,3 +6,7 @@ build/
 node_modules
 data/intranet
 .tmp
+backstop_data/bitmaps_test/
+backstop_data/html_report/
+
+

@@ -1,0 +1,50 @@
+name: Test
+
+on: pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "12"
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install node modules
+        run: npm ci
+
+      - name: Start site
+        run: bundle exec middleman server &
+
+      - name: Wait for site
+        run: npx wait-port 4567
+
+      - name: Run VRTs
+        run: |
+          sleep 5
+          npx backstop test --docker --config=backstop.config.js
+
+      - name: Upload VRT report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: vrt-report
+          path: backstop_data
